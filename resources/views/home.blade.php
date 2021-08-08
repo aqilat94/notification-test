@@ -1,3 +1,6 @@
+<? php
+use Illuminate\Support\Str;
+/?>
 @extends('layouts.app')
 
 @section('content')
@@ -13,8 +16,27 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    {{ __('You are logged in!') }}
+                    @php
+                        $notifications = auth()->user()->notifications;
+                    @endphp
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>
+                                Noti
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ( $notifications as $noti )
+                            <tr>
+                                <td>
+                                    @include('notifications.'.Str::snake(class_basename($notification->type)))
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
